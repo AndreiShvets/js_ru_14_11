@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+//очень перегруженный компонент вышел. Стоит вынести CommentList отдельно
 class Article extends Component {
     constructor() {
         super()
@@ -13,6 +13,7 @@ class Article extends Component {
     render() {
         const { article } = this.props;
         const body = this.state.isOpen ? <p>{article.text}</p> : null;
+	//всегда страшно, когда вижу такую вложенность - знак, что стоит дробить эту логику
 		if (this.state.isOpen) {
 			if (this.state.isCommentsVisible) {
 				const commentsItems = article.comments.map(comment => <li key = {comment.id}><i>{comment.user}</i>: {comment.text}</li>)
@@ -53,7 +54,7 @@ class Article extends Component {
 			isCommentsVisible: this.isReopenFullComments() ? this.state.isCommentsVisible : false
         });
     }
-
+	//а вот эти два метода можно заменить одним toggleOpen
     onHideCommentsClick = ev => {
         this.setState({
             isCommentsVisible: false
